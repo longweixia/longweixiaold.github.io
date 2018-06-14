@@ -62,87 +62,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-jsonp解析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/14/jsonp解析/" class="article-date">
-  <time datetime="2018-06-13T23:57:48.747Z" itemprop="datePublished">2018-06-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/14/jsonp解析/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>什么是JSONP</p>
-<p>首先提一下JSON这个概念，JSON是一种轻量级的数据传输格式，被广泛应用于当前Web应用中。JSON格式数据的编码和解析基本在所有主流语言中都被实现，所以现在大部分前后端分离的架构都以JSON格式进行数据的传输。</p>
-<p>那么JSONP是什么呢？</p>
-<p>首先抛出浏览器同源策略这个概念，为了保证用户访问的安全，现代浏览器使用了同源策略，即不允许访问非同源的页面，详细的概念大家可以自行百度。这里大家只要知道，在ajax中，不允许请求非同源的URL就可以了，比如<a href="http://www.a.com下的一个页面，其中的ajax请求是不允许访问www.b.com/c.php这样一个页面的。" target="_blank" rel="noopener">www.a.com下的一个页面，其中的ajax请求是不允许访问www.b.com/c.php这样一个页面的。</a></p>
-<p>JSONP就是用来解决跨域请求问题的，那么具体是怎么实现的呢？</p>
-<p>JSONP原理</p>
-<p>ajax请求受同源策略影响，不允许进行跨域请求，而script标签src属性中的链接却可以访问跨域的js脚本，利用这个特性，服务端不再返回JSON格式的数据，而是返回一段调用某个函数的js代码，在src中进行了调用，这样实现了跨域。</p>
-<p>JSONP具体实现</p>
-<p>1.首先看下ajax中如果进行跨域请求会如何。 前端代码在域<a href="http://www.practice.com下面，使用ajax发送了一个跨域的get请求" target="_blank" rel="noopener">www.practice.com下面，使用ajax发送了一个跨域的get请求</a></p>
-<p>&lt;!DOCTYPE html&gt;</p>
-<html><br><head><br>    <title>GoJSONP</title><br></head><br><body><br><script type="text/javascript"><br>    function jsonhandle(data){<br>        alert(“age:” + data.age + “name:” + data.name);<br>    }<br></script><br><script type="text/javascript" src="jquery-1.8.3.min.js"><br></script><br><script type="text/javascript"><br>    $(document).ready(function(){<br>        $.ajax({<br>            type : “get”,<br>            async: false,<br>            url : “<a href="http://www.practice-zhao.com/student.php?id=1&quot;">http://www.practice-zhao.com/student.php?id=1&quot;</a>,<br>            type: “json”,<br>            success : function(data) {<br>                jsonhandle(data);<br>            }<br><br>        });<br>    });<br></script><br></body><br></html>
-
-
-
-
-
-
-<p>后端PHP代码放在域<a href="http://www.practice-zhao.com下，简单的输出一段json格式的数据" target="_blank" rel="noopener">www.practice-zhao.com下，简单的输出一段json格式的数据</a></p>
-<p>jsonhandle({<br>    “age” : 15,<br>    “name”: “John”,<br>})</p>
-<p>当访问前端代码<a href="http://www.practice.com/gojsonp/index.html" target="_blank" rel="noopener">http://www.practice.com/gojsonp/index.html</a> 时 chrome报以下错误<br>这里写图片描述<br>提示了不同源的URL禁止访问<br>2.下面使用JSONP，将前端代码中的ajax请求去掉，添加了一个script标签，标签的src指向了另一个域<a href="http://www.practice-zhao.com下的remote.js脚本" target="_blank" rel="noopener">www.practice-zhao.com下的remote.js脚本</a></p>
-<p>&lt;!DOCTYPE html&gt;</p>
-<html><br><head><br>    <title>GoJSONP</title><br></head><br><body><br><script type="text/javascript"><br>    function jsonhandle(data){<br>        alert(“age:” + data.age + “name:” + data.name);<br>    }<br></script><br><script type="text/javascript" src="jquery-1.8.3.min.js"><br></script><br><script type="text/javascript" src="http://www.practice-zhao.com/remote.js"></script><br></body><br></html>
-
-
-
-
-<p>这里调用了跨域的remote.js脚本，remote.js代码如下：</p>
-<p>jsonhandle({<br>    “age” : 15,<br>    “name”: “John”,<br>})</p>
-<p>也就是这段远程的js代码执行了上面定义的函数，弹出了提示框 这里写图片描述</p>
-<p>3.将前端代码再进行修改，代码如下：</p>
-<p>&lt;!DOCTYPE html&gt;</p>
-<html><br><head><br>    <title>GoJSONP</title><br></head><br><body><br><script type="text/javascript"><br>    function jsonhandle(data){<br>        alert(“age:” + data.age + “name:” + data.name);<br>    }<br></script><br><script type="text/javascript" src="jquery-1.8.3.min.js"><br></script><br><script type="text/javascript"><br>    $(document).ready(function(){<br>        var url = “<a href="http://www.practice-zhao.com/student.php?id=1&amp;callback=jsonhandle&quot;">http://www.practice-zhao.com/student.php?id=1&amp;callback=jsonhandle&quot;</a>;<br>        var obj = $(‘<script>&lt;\/script&gt;’);<br>        obj.attr(“src”,url);<br>        $(“body”).append(obj);<br>    });<br></script><br></body><br></html>
-
-
-
-
-<p>这里动态的添加了一个script标签，src指向跨域的一个php脚本，并且将上面的js函数名作为callback参数传入，那么我们看下PHP代码怎么写的：</p>
-<p>&lt;?php<br>$data = array(<br>    ‘age’ =&gt; 20,<br>    ‘name’ =&gt; ‘张三’,<br>);</p>
-<p>$callback = $_GET[‘callback’];</p>
-<p>echo $callback.”(“.json_encode($data).”)”;<br>return;</p>
-<p>PHP代码返回了一段JS语句，即</p>
-<p>jsonhandle({<br>    “age” : 15,<br>    “name”: “张三”,<br>})</p>
-<p>此时访问页面时，动态添加了一个script标签，src指向PHP脚本，执行返回的JS代码，成功弹出提示框。 所以JSONP将访问跨域请求变成了执行远程JS代码，服务端不再返回JSON格式的数据，而是返回了一段将JSON数据作为传入参数的函数执行代码。</p>
-<p>4.最后jQuery提供了方便使用JSONP的方式，代码如下：</p>
-<p>&lt;!DOCTYPE html&gt;</p>
-<html><br><head><br>    <title>GoJSONP</title><br></head><br><body><br><script type="text/javascript" src="jquery-1.8.3.min.js"><br></script><br><script type="text/javascript"><br>    $(document).ready(function(){<br>        $.ajax({<br>            type : “get”,<br>            async: false,<br>            url : “<a href="http://www.practice-zhao.com/student.php?id=1&quot;">http://www.practice-zhao.com/student.php?id=1&quot;</a>,<br>            dataType: “jsonp”,<br>            jsonp:”callback”, //请求php的参数名<br>            jsonpCallback: “jsonhandle”,//要执行的回调函数<br>            success : function(data) {<br>                alert(“age:” + data.age + “name:” + data.name);<br>            }<br><br>        });<br>    });<br></script><br></body><br></html>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/14/jsonp解析/" data-id="cjidsz5120001bwq4xcd957ye" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/06/13/hello-world/" class="article-date">
@@ -178,7 +97,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/13/hello-world/" data-id="cjidsz50s0000bwq4zvf1d37i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/13/hello-world/" data-id="cjidtohzq0000i8q42iosvg8o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -217,10 +136,6 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
-        
-          <li>
-            <a href="/2018/06/14/jsonp解析/">Hello World</a>
-          </li>
         
           <li>
             <a href="/2018/06/13/hello-world/">Hello World</a>
