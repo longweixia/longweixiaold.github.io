@@ -7,13 +7,17 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="Vue的实例是Vue框架的入口，其实也就是前端的ViewModel，它包含了页面中的业务逻辑处理、数据模型等，当然它也有自己的一系列的生命周期的事件钩子，辅助我们进行对整个Vue实例生成、编译、挂着、销毁等过程进行js控制。#  5.1. Vue实例初始化的选项配置对象详解前面我们已经用了很多次new Vue({…})的代码，而且Vue初始化的选项都已经用了data、methods、el、com">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/06/15/Vue入门系列之Vue实例详解与生命周期/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Vue的实例是Vue框架的入口，其实也就是前端的ViewModel，它包含了页面中的业务逻辑处理、数据模型等，当然它也有自己的一系列的生命周期的事件钩子，辅助我们进行对整个Vue实例生成、编译、挂着、销毁等过程进行js控制。#  5.1. Vue实例初始化的选项配置对象详解前面我们已经用了很多次new Vue({…})的代码，而且Vue初始化的选项都已经用了data、methods、el、com">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-06-15T00:53:06.772Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="Vue的实例是Vue框架的入口，其实也就是前端的ViewModel，它包含了页面中的业务逻辑处理、数据模型等，当然它也有自己的一系列的生命周期的事件钩子，辅助我们进行对整个Vue实例生成、编译、挂着、销毁等过程进行js控制。#  5.1. Vue实例初始化的选项配置对象详解前面我们已经用了很多次new Vue({…})的代码，而且Vue初始化的选项都已经用了data、methods、el、com">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,9 +64,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Vue入门系列之Vue实例详解与生命周期" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Vue入门系列之Vue实例详解与生命周期" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/06/15/Vue入门系列之Vue实例详解与生命周期/" class="article-date">
   <time datetime="2018-06-15T00:53:10.778Z" itemprop="datePublished">2018-06-15</time>
@@ -213,106 +215,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-详解jsonp" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/14/详解jsonp/" class="article-date">
-  <time datetime="2018-06-14T01:31:36.842Z" itemprop="datePublished">2018-06-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/14/详解jsonp/">jsonp解析</a>
-    </h1>
+    <a href="/2018/06/14/详解jsonp/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">jsonp解析</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是JSONP"><a href="#什么是JSONP" class="headerlink" title="什么是JSONP"></a>什么是JSONP</h2><p>首先提一下JSON这个概念，JSON是一种轻量级的数据传输格式，被广泛应用于当前Web应用中。JSON格式数据的编码和解析基本在所有主流语言中都被实现，所以现在大部分前后端分离的架构都以JSON格式进行数据的传输。</p>
-<h3 id="那么JSONP是什么呢？"><a href="#那么JSONP是什么呢？" class="headerlink" title="那么JSONP是什么呢？"></a>那么JSONP是什么呢？</h3><p>首先抛出浏览器同源策略这个概念，为了保证用户访问的安全，现代浏览器使用了同源策略，即不允许访问非同源的页面，详细的概念大家可以自行百度。这里大家只要知道，在ajax中，不允许请求非同源的URL就可以了，比如<a href="http://www.a.com下的一个页面，其中的ajax请求是不允许访问www.b.com/c.php这样一个页面的。" target="_blank" rel="noopener">www.a.com下的一个页面，其中的ajax请求是不允许访问www.b.com/c.php这样一个页面的。</a></p>
-<p>JSONP就是用来解决跨域请求问题的，那么具体是怎么实现的呢？</p>
-<h3 id="JSONP原理"><a href="#JSONP原理" class="headerlink" title="JSONP原理"></a>JSONP原理</h3><p>ajax请求受同源策略影响，不允许进行跨域请求，而script标签src属性中的链接却可以访问跨域的js脚本，利用这个特性，服务端不再返回JSON格式的数据，而是返回一段调用某个函数的js代码，在src中进行了调用，这样实现了跨域。</p>
-<h3 id="JSONP具体实现"><a href="#JSONP具体实现" class="headerlink" title="JSONP具体实现"></a>JSONP具体实现</h3><p>1.首先看下ajax中如果进行跨域请求会如何。<br>前端代码在域<a href="http://www.practice.com下面，使用ajax发送了一个跨域的get请求" target="_blank" rel="noopener">www.practice.com下面，使用ajax发送了一个跨域的get请求</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;GoJSONP&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    function jsonhandle(data)&#123;</span><br><span class="line">        alert(&quot;age:&quot; + data.age + &quot;name:&quot; + data.name);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-1.8.3.min.js&quot;&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    $(document).ready(function()&#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            type : &quot;get&quot;,</span><br><span class="line">            async: false,</span><br><span class="line">            url : &quot;http://www.practice-zhao.com/student.php?id=1&quot;,</span><br><span class="line">            type: &quot;json&quot;,</span><br><span class="line">            success : function(data) &#123;</span><br><span class="line">                jsonhandle(data);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">后端PHP代码放在域www.practice-zhao.com下，简单的输出一段json格式的数据</span><br><span class="line"></span><br><span class="line">jsonhandle(&#123;</span><br><span class="line">    &quot;age&quot; : 15,</span><br><span class="line">    &quot;name&quot;: &quot;John&quot;,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">当访问前端代码http://www.practice.com/gojsonp/index.html 时 chrome报以下错误 </span><br><span class="line">这里写图片描述</span><br><span class="line">提示了不同源的URL禁止访问</span><br></pre></td></tr></table></figure>
-<p>2.下面使用JSONP，将前端代码中的ajax请求去掉，添加了一个script标签，标签的src指向了另一个域<a href="http://www.practice-zhao.com下的remote.js脚本" target="_blank" rel="noopener">www.practice-zhao.com下的remote.js脚本</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;GoJSONP&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    function jsonhandle(data)&#123;</span><br><span class="line">        alert(&quot;age:&quot; + data.age + &quot;name:&quot; + data.name);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-1.8.3.min.js&quot;&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.practice-zhao.com/remote.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这里调用了跨域的remote.js脚本，remote.js代码如下：</span><br><span class="line"></span><br><span class="line">jsonhandle(&#123;</span><br><span class="line">    &quot;age&quot; : 15,</span><br><span class="line">    &quot;name&quot;: &quot;John&quot;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>也就是这段远程的js代码执行了上面定义的函数，弹出了提示框<br>这里写图片描述</p>
-<p>3.将前端代码再进行修改，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;GoJSONP&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    function jsonhandle(data)&#123;</span><br><span class="line">        alert(&quot;age:&quot; + data.age + &quot;name:&quot; + data.name);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-1.8.3.min.js&quot;&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    $(document).ready(function()&#123;</span><br><span class="line">        var url = &quot;http://www.practice-zhao.com/student.php?id=1&amp;callback=jsonhandle&quot;;</span><br><span class="line">        var obj = $(&apos;&lt;script&gt;&lt;\/script&gt;&apos;);</span><br><span class="line">        obj.attr(&quot;src&quot;,url);</span><br><span class="line">        $(&quot;body&quot;).append(obj);</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这里动态的添加了一个script标签，src指向跨域的一个php脚本，并且将上面的js函数名作为callback参数传入，那么我们看下PHP代码怎么写的：</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$data = array(</span><br><span class="line">    &apos;age&apos; =&gt; 20,</span><br><span class="line">    &apos;name&apos; =&gt; &apos;张三&apos;,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">$callback = $_GET[&apos;callback&apos;];</span><br><span class="line"></span><br><span class="line">echo $callback.&quot;(&quot;.json_encode($data).&quot;)&quot;;</span><br><span class="line">return;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PHP代码返回了一段JS语句，即</span><br><span class="line"></span><br><span class="line">jsonhandle(&#123;</span><br><span class="line">    &quot;age&quot; : 15,</span><br><span class="line">    &quot;name&quot;: &quot;张三&quot;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>此时访问页面时，动态添加了一个script标签，src指向PHP脚本，执行返回的JS代码，成功弹出提示框。<br>所以JSONP将访问跨域请求变成了执行远程JS代码，服务端不再返回JSON格式的数据，而是返回了一段将JSON数据作为传入参数的函数执行代码。</p>
-<p>4.最后jQuery提供了方便使用JSONP的方式，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;GoJSONP&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-1.8.3.min.js&quot;&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    $(document).ready(function()&#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            type : &quot;get&quot;,</span><br><span class="line">            async: false,</span><br><span class="line">            url : &quot;http://www.practice-zhao.com/student.php?id=1&quot;,</span><br><span class="line">            dataType: &quot;jsonp&quot;,</span><br><span class="line">            jsonp:&quot;callback&quot;, //请求php的参数名</span><br><span class="line">            jsonpCallback: &quot;jsonhandle&quot;,//要执行的回调函数</span><br><span class="line">            success : function(data) &#123;</span><br><span class="line">                alert(&quot;age:&quot; + data.age + &quot;name:&quot; + data.name);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/14/详解jsonp/" data-id="cjif9g7l30000lcq40rhlydnc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/13/hello-world/" class="article-date">
-  <time datetime="2018-06-13T08:20:59.715Z" itemprop="datePublished">2018-06-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/13/hello-world/" data-id="cjif9g7nh0001lcq44mncw6i3" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
 
 </section>
         
