@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>vue基本配置和生命周期 | Longwei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Vue的实例是Vue框架的入口，其实也就是前端的ViewModel，它包含了页面中的业务逻辑处理、数据模型等，当然它也有自己的一系列的生命周期的事件钩子，辅助我们进行对整个Vue实例生成、编译、挂着、销毁等过程进行js控制。 # 5.1. Vue实例初始化的选项配置对象详解前面我们已经用了很多次new Vue({…})的代码，而且Vue初始化的选项都已经用了data、methods、el、comp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue基本配置和生命周期">
+<meta property="og:url" content="http://yoursite.com/2018/06/15/Vue入门系列之Vue实例详解与生命周期/index.html">
+<meta property="og:site_name" content="Longwei&#39;s blog">
+<meta property="og:description" content="Vue的实例是Vue框架的入口，其实也就是前端的ViewModel，它包含了页面中的业务逻辑处理、数据模型等，当然它也有自己的一系列的生命周期的事件钩子，辅助我们进行对整个Vue实例生成、编译、挂着、销毁等过程进行js控制。 # 5.1. Vue实例初始化的选项配置对象详解前面我们已经用了很多次new Vue({…})的代码，而且Vue初始化的选项都已经用了data、methods、el、comp">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-21T00:26:29.678Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue基本配置和生命周期">
+<meta name="twitter:description" content="Vue的实例是Vue框架的入口，其实也就是前端的ViewModel，它包含了页面中的业务逻辑处理、数据模型等，当然它也有自己的一系列的生命周期的事件钩子，辅助我们进行对整个Vue实例生成、编译、挂着、销毁等过程进行js控制。 # 5.1. Vue实例初始化的选项配置对象详解前面我们已经用了很多次new Vue({…})的代码，而且Vue初始化的选项都已经用了data、methods、el、comp">
+  
+    <link rel="alternate" href="/atom.xml" title="Longwei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Longwei&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Vue入门系列之Vue实例详解与生命周期" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/15/Vue入门系列之Vue实例详解与生命周期/" class="article-date">
+  <time datetime="2018-06-15T00:53:10.778Z" itemprop="datePublished">2018-06-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue基本配置和生命周期
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Vue的实例是Vue框架的入口，其实也就是前端的ViewModel，它包含了页面中的业务逻辑处理、数据模型等，当然它也有自己的一系列的生命周期的事件钩子，辅助我们进行对整个Vue实例生成、编译、挂着、销毁等过程进行js控制。</p>
+<p>#</p>
+<h4 id="5-1-Vue实例初始化的选项配置对象详解"><a href="#5-1-Vue实例初始化的选项配置对象详解" class="headerlink" title="5.1. Vue实例初始化的选项配置对象详解"></a>5.1. Vue实例初始化的选项配置对象详解</h4><p>前面我们已经用了很多次new Vue({…})的代码，而且Vue初始化的选项都已经用了data、methods、el、computedd等,估计您看到这里时，应该已经都明白了他们的作用，我们就详细讲解一下他们的使用情况。更详细的请参考官网内容</p>
+<h4 id="5-1-1-Vue实例的的data对象"><a href="#5-1-1-Vue实例的的data对象" class="headerlink" title="5.1.1. Vue实例的的data对象"></a>5.1.1. Vue实例的的data对象</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>Vue的实例的数据对象data 我们已经用了很多了，数据绑定离不开data里面的数据。也是Vue的核心属性。 它是Vue绑定数据到HTML标签的数据源泉，另外Vue框架会自动监视data里面的数据变化，自动更新数据到HTML标签上去。本质原理是：Vue会自动将data里面的数据进行递归抓换成getter和setter，然后就可以自动更新HTML标签了，当然用getter和setter所以老的浏览器Vue支持的不够好。</p>
+<p>data对象的类型：</p>
+<p>类型是Object或者Function。</p>
+<p>如果是组件对象中，data必须是Function类型。【后面学了组件后就明白了，暂时对组件先放放。】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">实例：</span><br><span class="line"></span><br><span class="line">// 创建普通的Vue实例</span><br><span class="line"></span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line"></span><br><span class="line">  data: data</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 组件定义【后面会详细讲的】</span><br><span class="line"></span><br><span class="line">// Vue.extend() 中 data 必须是函数</span><br><span class="line"></span><br><span class="line">var Component = Vue.extend(&#123;</span><br><span class="line"></span><br><span class="line">  data: function () &#123;  //这里必须是函数！！！！</span><br><span class="line"></span><br><span class="line">    return &#123; a: 1 &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="5-1-2-Vue实例的computed"><a href="#5-1-2-Vue实例的computed" class="headerlink" title="5.1.2. Vue实例的computed"></a>5.1.2. Vue实例的computed</h4><h5 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h5><p>Vue的计算属性（computed)的属性会自动混入Vue的实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例。这就很强大了，再计算属性中定义的函数里面可以直接使用指向了vue实例的this，异常方便的啊。</p>
+<h5 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h5><p>{ 键：函数}{ [key: string]: Function | { get: Function, set: Function } }当然，可以省略setter,如果省略了setter，那么值就可以是普通函数，但是必须有返回值。</p>
+<h5 id="官方的实例"><a href="#官方的实例" class="headerlink" title="官方的实例"></a>官方的实例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line"></span><br><span class="line">data: &#123; a: 1 &#125;,</span><br><span class="line"></span><br><span class="line">computed: &#123;</span><br><span class="line"></span><br><span class="line">  // 仅读取，值只须为函数</span><br><span class="line"></span><br><span class="line">  aDouble: function () &#123;</span><br><span class="line"></span><br><span class="line">    return this.a * 2</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  // 读取和设置</span><br><span class="line"></span><br><span class="line">  aPlus: &#123;</span><br><span class="line"></span><br><span class="line">    get: function () &#123;</span><br><span class="line"></span><br><span class="line">      return this.a + 1</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    set: function (v) &#123;</span><br><span class="line"></span><br><span class="line">      this.a = v - 1</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">vm.aPlus  // -&gt; 2</span><br><span class="line"></span><br><span class="line">vm.aPlus = 3</span><br><span class="line"></span><br><span class="line">vm.a      // -&gt; 2</span><br><span class="line"></span><br><span class="line">vm.aDouble // -&gt; 4</span><br><span class="line"></span><br><span class="line">5.1.3. methods</span><br><span class="line"></span><br><span class="line">类型: &#123; [key: string]: Function &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="详细"><a href="#详细" class="headerlink" title="详细:"></a>详细:</h5><p>methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。</p>
+<p>注意，不应该使用箭头函数来定义 method 函数 (例如 plus: () =&gt; this.a++)。理由是箭头函数绑定了父级作用域的上下文，所以 this 将不会按照期望指向 Vue 实例，this.a 将是 undefined。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line"></span><br><span class="line">  data: &#123; a: 1 &#125;,</span><br><span class="line"></span><br><span class="line">  methods: &#123;</span><br><span class="line"></span><br><span class="line">    plus: function () &#123;</span><br><span class="line"></span><br><span class="line">      this.a++</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">vm.plus()</span><br><span class="line"></span><br><span class="line">vm.a // 2</span><br><span class="line"></span><br><span class="line">5.1.4. watch</span><br><span class="line"></span><br><span class="line">类型</span><br><span class="line"></span><br><span class="line">&#123; [key: string]: string | Function | Object &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="详细-1"><a href="#详细-1" class="headerlink" title="详细:"></a>详细:</h5><p>一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line"></span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line"></span><br><span class="line">  data: &#123;</span><br><span class="line"></span><br><span class="line">    a: 1,</span><br><span class="line"></span><br><span class="line">    b: 2,</span><br><span class="line"></span><br><span class="line">    c: 3</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  watch: &#123;</span><br><span class="line"></span><br><span class="line">    // 监控a变量变化的时候，自动执行此函数</span><br><span class="line"></span><br><span class="line">    a: function (val, oldVal) &#123;</span><br><span class="line"></span><br><span class="line">      console.log(&apos;new: %s, old: %s&apos;, val, oldVal)</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    // 深度 watcher</span><br><span class="line"></span><br><span class="line">    c: &#123;</span><br><span class="line"></span><br><span class="line">      handler: function (val, oldVal) &#123; /* ... */ &#125;,</span><br><span class="line"></span><br><span class="line">      deep: true</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">vm.a = 2 // -&gt; new: 2, old: 1</span><br></pre></td></tr></table></figure>
+<p>//注意，不应该使用箭头函数来定义 watcher 函数 (例如 searchQuery: newValue =&gt; this.updateAutocomplete(newValue))。理由是箭头函数绑定了父级作用域的上下文，所以 this 将不会按照期望指向 Vue 实例，this.updateAutocomplete 将是 undefined。</p>
+<h5 id="参考综合案例"><a href="#参考综合案例" class="headerlink" title="参考综合案例:"></a>参考综合案例:</h5><h4 id="5-1-5-设置el的详解"><a href="#5-1-5-设置el的详解" class="headerlink" title="5.1.5. 设置el的详解"></a>5.1.5. 设置el的详解</h4><p>类型</p>
+<p>string | HTMLElement</p>
+<p>限制： 只在由 new 创建的实例中遵守。</p>
+<p>详细：</p>
+<p>提供一个在页面上已存在的 DOM 元素作为 Vue 实例的挂载目标,也就是说Vue绑定数据到哪里去找。可以是CSS 选择器，也可以是一个HTMLElement实例。</p>
+<p>在实例挂载之后(生命周期的内容后面会详细讲的奥)， 元素可以用 vm.$el 访问。</p>
+<p>如果这个选项在实例化时有作用，实例将立即进入编译过程，否则，需要显式调用 vm.$mount() 手动开启编译。</p>
+<p>// 几乎所有例子都用到这个，所以就不再赘述</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var app = new Vue(&#123;       </span><br><span class="line"></span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="5-2-Vue实例的生命周期"><a href="#5-2-Vue实例的生命周期" class="headerlink" title="5.2. Vue实例的生命周期"></a>5.2. Vue实例的生命周期</h5><p>Vue实例有一个完整的生命周期，也就是从开始创建、初始化数据、编译模板、挂载Dom、渲染→更新→渲染、卸载等一系列过程，我们称这是Vue的生命周期。通俗说就是Vue实例从创建到销毁的过程，就是生命周期。</p>
+<p>在Vue的整个生命周期中，它提供了一系列的事件，可以让我们注册js方法，可以让我们达到控制整个过程的目的地，哇赛，如果你搞过Asp.Net WebForm的话，你会发现整个就是WebForm的翻版嘛哈哈。值得注意的是，在这些事件响应方法中的this直接指向的是vue的实例。</p>
+<p>首先看看下面官网的一张生命周期的图，我做一下标注，看看整体的流程，后面我们上代码做一下效果。</p>
+<p>Vue提供的可以注册的钩子都在上图片的红色框标注。 他们是：</p>
+<p>beforeCreate</p>
+<p>在实例初始化之后，数据观测(data observer) 和 event/watcher 事件配置之前被调用。</p>
+<p>created</p>
+<p>实例已经创建完成之后被调用。在这一步，实例已完成以下的配置：数据观测(data observer)，属性和方法的运算， watch/event 事件回调。然而，挂载阶段还没开始，$el 属性目前不可见。</p>
+<p>beforeMount</p>
+<p>在挂载开始之前被调用：相关的 render 函数首次被调用。</p>
+<p>mounted</p>
+<p>el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。如果 root 实例挂载了一个文档内元素，当 mounted 被调用时 vm.$el 也在文档内。</p>
+<p>beforeUpdate</p>
+<p>数据更新时调用，发生在虚拟 DOM 重新渲染和打补丁之前。 你可以在这个钩子中进一步地更改状态，这不会触发附加的重渲染过程。</p>
+<p>updated</p>
+<p>由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。</p>
+<p>当这个钩子被调用时，组件 DOM 已经更新，所以你现在可以执行依赖于 DOM 的操作。然而在大多数情况下，你应该避免在此期间更改状态，因为这可能会导致更新无限循环。</p>
+<p>该钩子在服务器端渲染期间不被调用。</p>
+<p>beforeDestroy</p>
+<p>实例销毁之前调用。在这一步，实例仍然完全可用。</p>
+<p>destroyed</p>
+<p>Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。 该钩子在服务器端渲染期间不被调用。</p>
+<p>接下来我们做一个例子，看一下Vue中所有的生命周期怎么用的。</p>
+<p>再看一个综合的实战的例子，可能涉及到ajax和组件，不过先看一下vue的生命周期的例子的用法：</p>
+<p>import Axios from ‘axios’      // 这是一个轻量级的ajax库，import是es6模块导入的语法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;                // 这是一个vue的模块，后面讲奥。</span><br><span class="line"></span><br><span class="line">  name: &apos;app&apos;,</span><br><span class="line"></span><br><span class="line">  components: &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  data: function () &#123;</span><br><span class="line"></span><br><span class="line">    return &#123;</span><br><span class="line"></span><br><span class="line">      list: []</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  mounted: function () &#123;          // 挂在完成后的生命周期钩子注册。</span><br><span class="line"></span><br><span class="line">    this.$nextTick(function () &#123;  // 等待下一次更新完成后执行业务处理代码。</span><br><span class="line"></span><br><span class="line">      Axios.get(&apos;/api/menulist&apos;, &#123;// 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新</span><br><span class="line"></span><br><span class="line">        params: &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">      &#125;).then(function (res) &#123;</span><br><span class="line"></span><br><span class="line">        this.list = res.data</span><br><span class="line"></span><br><span class="line">      &#125;.bind(this))</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-3-Vue实例的全局配置"><a href="#5-3-Vue实例的全局配置" class="headerlink" title="5.3. Vue实例的全局配置"></a>5.3. Vue实例的全局配置</h4><p>这一块都是一些小的知识点，我就不赘述了，直接copy官网Vue.config 是一个对象，包含 Vue 的全局配置。可以在启动应用之前修改下列属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">silent</span><br><span class="line"></span><br><span class="line">类型： boolean</span><br><span class="line"></span><br><span class="line">默认值： false</span><br><span class="line"></span><br><span class="line">用法：</span><br><span class="line"></span><br><span class="line">Vue.config.silent = true</span><br><span class="line"></span><br><span class="line">//取消 Vue 所有的日志与警告。</span><br><span class="line"></span><br><span class="line">optionMergeStrategies</span><br><span class="line"></span><br><span class="line">类型： &#123; [key: string]: Function &#125;</span><br><span class="line"></span><br><span class="line">默认值： &#123;&#125;</span><br><span class="line"></span><br><span class="line">用法：</span><br><span class="line"></span><br><span class="line">Vue.config.optionMergeStrategies._my_option = function (parent, child, vm) &#123;</span><br><span class="line"></span><br><span class="line">return child + 1</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const Profile = Vue.extend(&#123;</span><br><span class="line"></span><br><span class="line">_my_option: 1</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// Profile.options._my_option = 2</span><br></pre></td></tr></table></figure>
+<p>//自定义合并策略的选项。</p>
+<p>//合并策略选项分别接受第一个参数作为父实例，第二个参数为子实例，Vue实例上下文被作为第三个参数传入。</p>
+<p>devtools</p>
+<p>类型： boolean</p>
+<p>默认值： true (生产版为 false)</p>
+<p>用法：</p>
+<p>// 务必在加载 Vue 之后，立即同步设置以下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.devtools = true</span><br></pre></td></tr></table></figure>
+<p>//配置是否允许 vue-devtools 检查代码。开发版本默认为 true，生产版本默认为 false。生产版本设为 true 可以启用检查。</p>
+<p>errorHandler</p>
+<p>类型： Function</p>
+<p>默认值： 默认抛出错误</p>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.errorHandler = function (err, vm) &#123;</span><br><span class="line"></span><br><span class="line">// handle error</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>//指定组件的渲染和观察期间未捕获错误的处理函数。这个处理函数被调用时，可获取错误信息和 Vue 实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//Sentry, an error tracking service, provides official integration using this option.</span><br><span class="line"></span><br><span class="line">ignoredElements</span><br><span class="line"></span><br><span class="line">类型: Array</span><br><span class="line"></span><br><span class="line">默认值: []</span><br></pre></td></tr></table></figure>
+<p>用法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.ignoredElements = [</span><br><span class="line"></span><br><span class="line">&apos;my-custom-web-component&apos;, &apos;another-web-component&apos;</span><br></pre></td></tr></table></figure>
+<p>]</p>
+<p>须使 Vue 忽略在 Vue 之外的自定义元素 (e.g., 使用了 Web Components APIs)。否则，它会假设你忘记注册全局组件或者拼错了组件名称，从而抛出一个关于 Unknown custom element 的警告。</p>
+<p>keyCodes</p>
+<p>类型： { [key: string]: number | Array }</p>
+<p>默认值： {}</p>
+<p>用法：</p>
+<p>Vue.config.keyCodes = {</p>
+<p>v: 86,</p>
+<p>f1: 112,</p>
+<p>mediaPlayPause: 179,</p>
+<p>up: [38, 87]</p>
+<p>}api</p>
+<p>//给 v-on 自定义键位别名。</p>
+<p>5.4. Vue的全局API</p>
+<p>Vue的全局API提供大量的功能，我这里就给大家罗列几个常用的结果，其他的还是参考官网.</p>
+<p>5.4.1. Vue.nextTick</p>
+<p>语法： Vue.nextTick( [callback, context] )</p>
+<p>参数：   </p>
+<p>{Function} [callback]</p>
+<p>{Object} [context]</p>
+<p>用法： 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。</p>
+<p>// 修改数据</p>
+<p>vm.msg = ‘Hello’</p>
+<p>// DOM 还没有更新</p>
+<p>Vue.nextTick(function () {</p>
+<p>  // DOM 更新了</p>
+<p>})</p>
+<p>5.4.2. Vue.set</p>
+<p>语法： Vue.set( object, key, value )</p>
+<p>参数：</p>
+<p>{Object} object</p>
+<p>{string} key</p>
+<p>{any} value</p>
+<p>返回值： 设置的值.</p>
+<p>用法：</p>
+<p>设置对象的属性。如果对象是响应式的，确保属性被创建后也是响应式的，同时触发视图更新。这个方法主要用于避开 Vue 不能检测属性被添加的限制。 注意对象不能是 Vue 实例，或者 Vue 实例的根数据对象。</p>
+<p>5.4.3. Vue.compile</p>
+<p>语法：</p>
+<p>Vue.compile( template )</p>
+<p>参数：</p>
+<p>{string} template</p>
+<p>用法：</p>
+<p>//在render函数中编译模板字符串。只在独立构建时有效</p>
+<p>var res = Vue.compile(‘</p>
+
+<p>‘)<br>new Vue({</p>
+<p>  data: {</p>
+<pre><code>msg: &apos;hello&apos;
+</code></pre><p>  },</p>
+<p>  render: res.render,</p>
+<p>  staticRenderFns: res.staticRenderFns</p>
+<p>})</p>
+<p>5.4.4. 全局API总结</p>
+<p>其实还有几个其他的全局API，不打算在这里讲了，比如扩展组件Vue.extend 的用法、Vue.use加载插件、Vue.filter加载过滤器、Vue.directive自定义指令等 后面再讲其他Vue的知识点的时候，再加上这些，全局API其实就是Vue类型的静态方法，全局范围内都可以使用的，某些实例的方法本质也是调用了这些全局的，后面用到时候再说。</p>
+<p>5.5. Vue实例与生命周期总结</p>
+<p>Vue的实例封装的还是挺有艺术性的，很符合开发者的思维规范，它的生命周期也非常清晰，使用起来也非常方便。Vue确实一个好框架。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/15/Vue入门系列之Vue实例详解与生命周期/" data-id="cjinut8ld0000xoq4e638aj51" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/14/详解jsonp/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">jsonp解析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/15/Vue入门系列之Vue实例详解与生命周期/">vue基本配置和生命周期</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/14/详解jsonp/">jsonp解析</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/13/hello-world/">怎么开始创建运行博客</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Longwei<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
