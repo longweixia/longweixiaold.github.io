@@ -3,7 +3,7 @@
   <entry>
     <title></title>
     <url>%2F2018%2F06%2F21%2F%60string%60%20%E6%98%AF%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%2F</url>
-    <content type="text"><![CDATA[string 是模板字符串，ES2015新增的符号。 12var x = &apos;a&apos;, y = &apos;b&apos;;var z = `$&#123;x,y&#125;`; //&apos;b&apos; 模板字符串里面${var}是变量的占位符。x,y 逗号运算符是返回符号右边的值，这里面等于y。 其实是这样的 ${}里边 依旧是js，外边也是js 什么场景使用最好呢，还记得字符串拼接吗没错，++++例如：12var a = 1; console.log(&apos;一共有&apos;+a+&apos;个鸡蛋！&apos;)那么现在你只要console.log(`一共有$&#123;a&#125;个鸡蛋！`)]]></content>
+    <content type="text"><![CDATA[titlestring 是模板字符串，ES2015新增的符号。12var x = &apos;a&apos;, y = &apos;b&apos;;var z = `$&#123;x,y&#125;`; //&apos;b&apos; 模板字符串里面${var}是变量的占位符。x,y 逗号运算符是返回符号右边的值，这里面等于y。 其实是这样的 ${}里边 依旧是js，外边也是js 什么场景使用最好呢，还记得字符串拼接吗没错，++++例如：12var a = 1; console.log(&apos;一共有&apos;+a+&apos;个鸡蛋！&apos;)那么现在你只要console.log(`一共有$&#123;a&#125;个鸡蛋！`)]]></content>
   </entry>
   <entry>
     <title><![CDATA[vue基本配置和生命周期]]></title>
