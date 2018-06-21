@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[前端代码优化兼容小结]]></title>
+    <url>%2F2018%2F06%2F21%2F%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%85%BC%E5%AE%B9%E5%B0%8F%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[如何让页面加载速度更快呢？1、优化图片，包含大量图片的页面加载速度非常缓慢，这会耗费很多带宽资源 2、尽量减少或避免使用页内iframe框架，因为在打开一个页面的同时，浏览器实际上在同时访问多个页面，所有的iframe加载完后，你才能看到一个完整页面 3、在html代码的底部加载javascript操作，而非放在头部加载，页面执行是从上而下执行的，如果某个js加载耗时太长，这会影响到整个页面 4、合并资源文件、压缩文件 5、尽量减少HTTP的请求次数 6、缓存技术。访问量大的页面（如首页）生成静态页，常用的且变更不频繁的模块使用局部缓存，减少数据库查询次数 7、延迟显示可见区域外的内容 8、延长执行非必要脚本 9、尽量使用图片代替flase 10、避免阻塞 11、Gzip压缩 12、DNS读取]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[细说新技术]]></title>
     <url>%2F2018%2F06%2F21%2F%E7%BB%86%E8%AF%B4%E6%96%B0%E6%8E%A5%E8%A7%A6%E7%9A%84%E6%8A%80%E6%9C%AF%2F</url>
     <content type="text"><![CDATA[GitGit，版本管理工具。用这个东西几个月了，没什么好说的，就是修改代码，提交代码，推送。 方便多人合作。这个自己可以看一下网上的教程，了解一下每个操作的概念。具体的还得在实际工作中，看下团队的需要，才能知道具体需要用到哪些。Less Less是一种动态样式语言,属于CSS预处理语言的一种，和Sass是一个意思。就是通过一些嵌套，mixin，变量等。编译出你需要的CSS。让你自己写的样式更少些。 例如： base.less 12345678910box&#123; @color1: red; @color2: blue; span&#123; background: @color1; &#125; a&#123; color: @color2; &#125;&#125; 编译后的CSS为 base.css123456#box span&#123;background: red; &#125;#box a &#123; color: blue; &#125; AngularAngularJs是MVVM的模式。Model,View,ViewModel。 就是Model的数据发生改变时，View层的表现也会同时发生变化。 View层的数据发生改变时，Model里的数据也会随之改变。 不需要写任何的事件操作。只需要绑定一下模型。 这个跟着看了一遍文档教程,跟着视频走了一遍,Demo写了一些。 requireJs RequireJS的目标是鼓励代码的模块化，它使用了不同于传统script标签的脚本加载步骤。 可以用它来加速、优化代码，但其主要目的还是为了代码的模块化。它鼓励在使用脚本时以module ID替代URL地址 模版引擎 handlebars.js template.js 这里的模版引擎仅仅是为了”不拼字符串”。具体的操作也没什么好说的。]]></content>

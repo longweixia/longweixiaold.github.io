@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-21T05:00:37.345Z</updated>
+  <updated>2018-06-21T05:06:34.922Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端代码优化兼容小结</title>
+    <link href="http://yoursite.com/2018/06/21/%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%85%BC%E5%AE%B9%E5%B0%8F%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/06/21/前端代码优化兼容小结/</id>
+    <published>2018-06-21T05:04:22.970Z</published>
+    <updated>2018-06-21T05:06:34.922Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="如何让页面加载速度更快呢？"><a href="#如何让页面加载速度更快呢？" class="headerlink" title="如何让页面加载速度更快呢？"></a>如何让页面加载速度更快呢？</h4><p>1、优化图片，包含大量图片的页面加载速度非常缓慢，这会耗费很多带宽资源</p><p>2、尽量减少或避免使用页内iframe框架，因为在打开一个页面的同时，浏览器实际上在同时访问多个页面，所有的iframe加载完后，你才能看到一个完整页面</p><p>3、在html代码的底部加载javascript操作，而非放在头部加载，页面执行是从上而下执行的，如果某个js加载耗时太长，这会影响到整个页面</p><p>4、合并资源文件、压缩文件</p><p>5、尽量减少HTTP的请求次数</p><p>6、缓存技术。访问量大的页面（如首页）生成静态页，常用的且变更不频繁的模块使用局部缓存，减少数据库查询次数</p><p>7、延迟显示可见区域外的内容</p><p>8、延长执行非必要脚本</p><p>9、尽量使用图片代替flase</p><p>10、避免阻塞</p><p>11、Gzip压缩</p><p>12、DNS读取</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;如何让页面加载速度更快呢？&quot;&gt;&lt;a href=&quot;#如何让页面加载速度更快呢？&quot; class=&quot;headerlink&quot; title=&quot;如何让页面加载速度更快呢？&quot;&gt;&lt;/a&gt;如何让页面加载速度更快呢？&lt;/h4&gt;&lt;p&gt;1、优化图片，包含大量图片的页面加载速度非常缓慢，这
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>细说新技术</title>
